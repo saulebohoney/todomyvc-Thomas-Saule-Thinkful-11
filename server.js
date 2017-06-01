@@ -23,17 +23,17 @@ const corsHeader = function(req,res, next){
 app.use(bodyParser.json());
 
 app.get('/api/items', corsHeader, (req, res) => {
-  res.json( [] );
+  knex.select().table('items')
+  .then(results => res.json(results));
 });
+
+
+
 
 app.post('/api/items', (req, res) => {
   res.status(201).location();
   res.json( {title: req.body.title} );
 });
-
-
-
-
 
 
 //Server stuff
@@ -69,6 +69,7 @@ function closeServer() {
   });
 }
 
+
 if (require.main === module) {
   runServer().catch(err => {
     console.error(`Can't start server: ${err}`);
@@ -77,3 +78,5 @@ if (require.main === module) {
 }
 
 module.exports = { app, runServer, closeServer };
+
+
