@@ -127,7 +127,7 @@ describe('TodoMVC API:', () => {
    */
 
   // NOTE: This describe block wraps sub-blocks and tests
-  describe.only('With database:', function () {
+  describe('With database:', function () {
 
     // afterEach test, delete the test items in the table
     afterEach(() => {
@@ -138,7 +138,7 @@ describe('TodoMVC API:', () => {
         });
     });
 
-    describe('GET endpoints', function () {
+    describe.only('GET endpoints', function () {
       /**
        * This requires you to wire-up the GET /api/items endpoint to knex and postgres
        */

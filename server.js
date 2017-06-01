@@ -2,6 +2,7 @@
 
 const express = require('express');
 const { DATABASE, PORT } = require('./config');
+let knex = require('knex')(DATABASE);
 const bodyParser = require('body-parser');
 
 
@@ -27,9 +28,6 @@ app.get('/api/items', corsHeader, (req, res) => {
   .then(results => res.json(results));
 });
 
-
-
-
 app.post('/api/items', (req, res) => {
   res.status(201).location();
   res.json( {title: req.body.title} );
@@ -38,7 +36,7 @@ app.post('/api/items', (req, res) => {
 
 //Server stuff
 let server;
-let knex;
+//let knex;
 function runServer(database = DATABASE, port = PORT) {
   return new Promise((resolve, reject) => {
     try {
@@ -78,5 +76,3 @@ if (require.main === module) {
 }
 
 module.exports = { app, runServer, closeServer };
-
-
