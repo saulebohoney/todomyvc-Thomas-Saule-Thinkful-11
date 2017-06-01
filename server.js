@@ -31,7 +31,7 @@ app.get('/api/items', corsHeader, (req, res) => {
 });
 
 app.get('/api/items/:id', corsHeader, (req, res) => {
-  knex.select('id')
+  knex.select('id','title')
     .from('items')
     .where('id', req.params.id)
     .then(results => res.json(results[0]));
@@ -51,7 +51,7 @@ app.post('/api/items', jsonParser, (req, res) => {
     .into('items')
     .returning(['id', 'title'])
     .then(results => {
-      console.log(results);
+     // console.log(results);
       const protocol = req.protocol;
       const host = req.hostname;
       const newId = results[0].id;
