@@ -27,7 +27,17 @@ app.use(bodyParser.json());
 app.get('/api/items', corsHeader, (req, res) => {
   knex.select()
     .from('items')
-    .then(results => res.json(results));
+    .then(results => res.json(results.map(response => {
+      const protocol = req.protocol;
+      const host = req.hostname;
+      const rObj = {
+        id: response.id,
+        title: response.title,
+        completed: response.completed,
+        url: `${protocol}://${host}:${PORT}/api/items/${response.id}`
+      };
+      return rObj;
+    })));
 });
 
 app.get('/api/items/:id', corsHeader, (req, res) => {
@@ -49,7 +59,7 @@ app.post('/api/items', jsonParser, (req, res) => {
   }
   knex.insert({title:req.body.title})
     .into('items')
-    .returning(['id', 'title'])
+    .returning(['id', 'title', 'completed'])
     .then(results => {
      // console.log(results);
       const protocol = req.protocol;
@@ -57,12 +67,14 @@ app.post('/api/items', jsonParser, (req, res) => {
       const newId = results[0].id;
       const newUrl = `${protocol}://${host}:${PORT}/api/items/${newId}`;
       const newTitle = results[0].title;
+      const completed = results[0].completed;
       //console.log(protocol, host, newId, newUrl, newTitle);
       res.status(201).location(newUrl).json(
         {
           id: newId,
           title: newTitle,
-          url: newUrl
+          url: newUrl,
+          completed: completed
         }
     );
     });

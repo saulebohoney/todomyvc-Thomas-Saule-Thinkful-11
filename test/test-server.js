@@ -186,7 +186,7 @@ describe('TodoMVC API:', () => {
       });
     });
 
-    describe.only('POST endpoint', function () {
+    describe('POST endpoint', function () {
       /**
        * This test requires you to check the incoming post body to make sure it contains
        * valid data before saving to the database
@@ -332,7 +332,7 @@ describe('TodoMVC API:', () => {
 
     });
 
-    describe('PUT endpoint', function () {
+    describe.only('PUT endpoint', function () {
       /**
        * This test requires you to wireup the database to the PUT endpoint so the title can be changed
        */
