@@ -6,6 +6,12 @@ const { DATABASE, PORT } = require('./config');
 const app = express();
 
 // Add middleware and .get, .post, .put and .delete endpoints
+app.get('/api/items', (req, res) => {
+  res.json( [] );
+});
+
+
+
 
 let server;
 let knex;
