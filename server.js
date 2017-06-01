@@ -24,8 +24,16 @@ const corsHeader = function(req,res, next){
 app.use(bodyParser.json());
 
 app.get('/api/items', corsHeader, (req, res) => {
-  knex.select().table('items')
-  .then(results => res.json(results));
+  knex.select()
+    .from('items')
+    .then(results => res.json(results));
+});
+
+app.get('/api/items/:id', corsHeader, (req, res) => {
+  knex.select('id')
+    .from('items')
+    .where('id', req.params.id)
+    .then(results => res.json(results[0]));
 });
 
 app.post('/api/items', (req, res) => {

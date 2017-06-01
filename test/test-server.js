@@ -196,6 +196,9 @@ describe('TodoMVC API:', () => {
         return chai.request(app)
           .post('/api/items')
           .send(newItem)
+          .then(function (result) {
+            result.should.not.have.status(201);
+          })
           .catch((err) => {
             err.should.have.status(400);
           });
