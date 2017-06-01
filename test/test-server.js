@@ -138,7 +138,7 @@ describe('TodoMVC API:', () => {
         });
     });
 
-    describe.only('GET endpoints', function () {
+    describe('GET endpoints', function () {
       /**
        * This requires you to wire-up the GET /api/items endpoint to knex and postgres
        */
@@ -186,7 +186,7 @@ describe('TodoMVC API:', () => {
       });
     });
 
-    describe('POST endpoint', function () {
+    describe.only('POST endpoint', function () {
       /**
        * This test requires you to check the incoming post body to make sure it contains
        * valid data before saving to the database
