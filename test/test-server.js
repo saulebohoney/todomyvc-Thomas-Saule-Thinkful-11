@@ -332,7 +332,7 @@ describe('TodoMVC API:', () => {
 
     });
 
-    describe.only('PUT endpoint', function () {
+    describe('PUT endpoint', function () {
       /**
        * This test requires you to wireup the database to the PUT endpoint so the title can be changed
        */
@@ -392,7 +392,7 @@ describe('TodoMVC API:', () => {
       });
     });
 
-    describe('DELETE endpoint', function () {
+    describe.only('DELETE endpoint', function () {
       /**
        * This test requires you to wire-up the delete endpoint so items can be deleted.
        */
