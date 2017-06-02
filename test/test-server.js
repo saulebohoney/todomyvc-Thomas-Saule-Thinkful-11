@@ -78,7 +78,7 @@ describe('TodoMVC API:', () => {
     it('should respond to POST with an object a status 201 and a location header', function () {
       return chai.request(app)
         .post('/api/items')
-        .send({})
+        .send({'title':'hello!'})
         .then(function (result) {
           result.should.have.status(201);
           result.should.have.header('location');
@@ -130,7 +130,7 @@ describe('TodoMVC API:', () => {
   describe('With database:', function () {
 
     // afterEach test, delete the test items in the table
-    afterEach(() => {
+    beforeEach(() => {
       return knex('items')
         .del()
         .catch((err) => {
