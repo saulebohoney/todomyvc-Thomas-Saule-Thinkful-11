@@ -10,9 +10,8 @@ const app = express();
 
 
 // Add middleware and .get, .post, .put and .delete endpoints
-// app.get('/', (req, res) => {
-//   res.send('Hello!');
-// });
+
+//Generates a response URL to be sent back to the client
 const responseURL = (req, res, id) => {
   const protocol = req.protocol;
   const host = req.hostname;
@@ -28,17 +27,16 @@ const corsHeader = function(req,res, next){
 app.use(bodyParser.json());
 app.use(corsHeader);
 
+//In which there are endpoints
+
 app.get('/api/items', (req, res) => {
   knex('items')
     .select()
     .then(results => res.json(results.map(response => {
-      //const protocol = req.protocol;
-      //const host = req.hostname;
       const rObj = {
         id: response.id,
         title: response.title,
         completed: response.completed,
-        //url: `${protocol}://${host}:${PORT}/api/items/${response.id}`
         url: responseURL(req, res, response.id)
       };
       return rObj;
@@ -58,7 +56,6 @@ app.post('/api/items', jsonParser, (req, res) => {
     const field = requiredFields[i];
     if (!(field in req.body)) {
       const message = `Missing \`${field}\` in request body`;
-      //console.error(message);
       return res.status(400).send(message);
     }
   }
@@ -66,14 +63,9 @@ app.post('/api/items', jsonParser, (req, res) => {
     .insert({title:req.body.title})
     .returning(['id', 'title', 'completed'])
     .then(results => {
-     // console.log(results);
-      //const protocol = req.protocol;
-      //const host = req.hostname;
       const newId = results[0].id;
-      //const newUrl = `${protocol}://${host}:${PORT}/api/items/${newId}`;
       const newTitle = results[0].title;
       const completed = results[0].completed;
-      //console.log(protocol, host, newId, newUrl, newTitle);
       res.status(201).location(responseURL(req, res, newId)).json(
         {
           id: newId,
@@ -99,7 +91,7 @@ app.put('/api/items/:id',(req, res)=> {
 
 
 app.delete('/api/items/:id', (req,res) => {
-   knex('items')
+  knex('items')
   .where('id',req.params.id)
   .del()
   .then (results => res.json(results[0]));
@@ -107,7 +99,6 @@ app.delete('/api/items/:id', (req,res) => {
 
 //Server stuff
 let server;
-//let knex;
 function runServer(database = DATABASE, port = PORT) {
   return new Promise((resolve, reject) => {
     try {
