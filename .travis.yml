@@ -1,2 +1,9 @@
 language: node_js
 node_js: node
+deploy:
+  provider: heroku
+  api_key:
+    secure: aU/6VzhXq/TjaUuSzOXkUdo+ME5FE+ZGUcz1EO5pB+hGZq1yqm+bOQ93RO/2f65RpYOu5j22RJNzAGOiBSbsx6pgQ3zS5kpcwgMwGa8SwrRcmuBlB0e0zJR70LuZl5NWUBggeddi6CLHq91nkS2TmiOWWnkFaFct5BsuWMYLibBnp3jwnR8yzwGs0qT13+GTdQz709SoyAmDYRhhVdXe1rFQZwx6ru3oG4ZASzTbUnX5hpEYKVm/64ZKHIIEta6sflD6WBDZZlcoZBE/sIHLocS8Fl+LLwgisPsTBBlbD0qCL9bxbx/2PofmTcPoa/Z8wWnHqEsAFzNqgXLswTqWGJzpDg+/vM0CzMMOTHIpdf/sKt/TFZZePkr4kGmi0vI+yCfAWS0QLLugBGp4UybpG9E1pSbVlanrZ5D7NtKi7B+fiQuPSlFcKhOBUR2IVqTRfp9RQYu9866hK+q90qR+fdKXQbTkd5tStPWbpd7Tyb+BFtHicFgM0ojPDFxe/D0UYPJqfpgxrTuayd1VIoLQm46vncMjNhOLLMsRPZs+o/AJ6i5r5mXAw88nwN5TaOwNhOxwJjDOoL3+Fg+JDqq4lPMXeYllfCr1XmUDuQHbPplM2fg38SQan81EWfcDBnW4xm/SDOQCAD85Sqk+ucMOYFjJCWgZhQA8+7x8Uba/sKI=
+  app: calm-dawn-36856
+  on:
+    repo: thinkful-c11/saule-thomas-todomvc
