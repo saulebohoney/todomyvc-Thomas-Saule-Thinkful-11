@@ -26,8 +26,8 @@ app.use(bodyParser.json());
 app.use(corsHeader);
 
 app.get('/api/items', (req, res) => {
-  knex.select()
-    .from('items')
+  knex('items')
+    .select()
     .then(results => res.json(results.map(response => {
       const protocol = req.protocol;
       const host = req.hostname;
@@ -42,8 +42,8 @@ app.get('/api/items', (req, res) => {
 });
 
 app.get('/api/items/:id', (req, res) => {
-  knex.select('id','title')
-    .from('items')
+  knex('items')
+    .select('id','title')
     .where('id', req.params.id)
     .then(results => res.json(results[0]));
 });
@@ -58,8 +58,8 @@ app.post('/api/items', jsonParser, (req, res) => {
       return res.status(400).send(message);
     }
   }
-  knex.insert({title:req.body.title})
-    .into('items')
+  knex('items')
+    .insert({title:req.body.title})
     .returning(['id', 'title', 'completed'])
     .then(results => {
      // console.log(results);
