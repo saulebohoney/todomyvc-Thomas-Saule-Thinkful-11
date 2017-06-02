@@ -23,8 +23,9 @@ const corsHeader = function(req,res, next){
 };
 
 app.use(bodyParser.json());
+app.use(corsHeader);
 
-app.get('/api/items', corsHeader, (req, res) => {
+app.get('/api/items', (req, res) => {
   knex.select()
     .from('items')
     .then(results => res.json(results.map(response => {
@@ -40,7 +41,7 @@ app.get('/api/items', corsHeader, (req, res) => {
     })));
 });
 
-app.get('/api/items/:id', corsHeader, (req, res) => {
+app.get('/api/items/:id', (req, res) => {
   knex.select('id','title')
     .from('items')
     .where('id', req.params.id)
@@ -53,7 +54,7 @@ app.post('/api/items', jsonParser, (req, res) => {
     const field = requiredFields[i];
     if (!(field in req.body)) {
       const message = `Missing \`${field}\` in request body`;
-      console.error(message);
+      //console.error(message);
       return res.status(400).send(message);
     }
   }
@@ -80,7 +81,7 @@ app.post('/api/items', jsonParser, (req, res) => {
     });
 });
 
-app.put('/api/items/:id',corsHeader,(req, res)=> {
+app.put('/api/items/:id',(req, res)=> {
   knex('items')
     .where('id',req.params.id)
     .update(
@@ -92,7 +93,7 @@ app.put('/api/items/:id',corsHeader,(req, res)=> {
     .then(results => res.json(results[0]));
 });
 
-app.delete('/api/items/:id', corsHeader, (req, res) => {
+app.delete('/api/items/:id', (req, res) => {
   knex('items')
     .where('id', req.params.id)
     .del();
