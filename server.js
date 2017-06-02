@@ -80,7 +80,7 @@ app.post('/api/items', jsonParser, (req, res) => {
     });
 });
 
-app.put('/api/items/:id',corsHeader,(req,res)=> {
+app.put('/api/items/:id',corsHeader,(req, res)=> {
   knex('items')
     .where('id',req.params.id)
     .update(
@@ -91,6 +91,14 @@ app.put('/api/items/:id',corsHeader,(req,res)=> {
     ['id', 'title', 'completed'])
     .then(results => res.json(results[0]));
 });
+
+app.delete('/api/items/:id', corsHeader, (req, res) => {
+  knex('items')
+    .where('id', req.params.id)
+    .del();
+});
+
+
 
 //Server stuff
 let server;
