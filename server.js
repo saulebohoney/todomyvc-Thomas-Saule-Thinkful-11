@@ -97,13 +97,13 @@ app.put('/api/items/:id',(req, res)=> {
     .then(results => res.json(results[0]));
 });
 
-app.delete('/api/items/:id', (req, res) => {
-  knex('items')
-    .where('id', req.params.id)
-    .del();
+
+app.delete('/api/items/:id', (req,res) => {
+   knex('items')
+  .where('id',req.params.id)
+  .del()
+  .then (results => res.json(results[0]));
 });
-
-
 
 //Server stuff
 let server;

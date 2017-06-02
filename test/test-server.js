@@ -392,7 +392,7 @@ describe('TodoMVC API:', () => {
       });
     });
 
-    describe('DELETE endpoint', function () {
+    describe ('DELETE endpoint', function () {
       /**
        * This test requires you to wire-up the delete endpoint so items can be deleted.
        */
