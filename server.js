@@ -6,7 +6,6 @@ let knex = require('knex')(DATABASE);
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 
-
 const app = express();
 
 
@@ -14,7 +13,11 @@ const app = express();
 // app.get('/', (req, res) => {
 //   res.send('Hello!');
 // });
-
+const responseURL = (req, res, id) => {
+  const protocol = req.protocol;
+  const host = req.hostname;
+  return `${protocol}://${host}:${PORT}/api/items/${id}`;
+};
 const corsHeader = function(req,res, next){
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Content-Type');
@@ -29,13 +32,14 @@ app.get('/api/items', (req, res) => {
   knex('items')
     .select()
     .then(results => res.json(results.map(response => {
-      const protocol = req.protocol;
-      const host = req.hostname;
+      //const protocol = req.protocol;
+      //const host = req.hostname;
       const rObj = {
         id: response.id,
         title: response.title,
         completed: response.completed,
-        url: `${protocol}://${host}:${PORT}/api/items/${response.id}`
+        //url: `${protocol}://${host}:${PORT}/api/items/${response.id}`
+        url: responseURL(req, res, response.id)
       };
       return rObj;
     })));
@@ -63,18 +67,18 @@ app.post('/api/items', jsonParser, (req, res) => {
     .returning(['id', 'title', 'completed'])
     .then(results => {
      // console.log(results);
-      const protocol = req.protocol;
-      const host = req.hostname;
+      //const protocol = req.protocol;
+      //const host = req.hostname;
       const newId = results[0].id;
-      const newUrl = `${protocol}://${host}:${PORT}/api/items/${newId}`;
+      //const newUrl = `${protocol}://${host}:${PORT}/api/items/${newId}`;
       const newTitle = results[0].title;
       const completed = results[0].completed;
       //console.log(protocol, host, newId, newUrl, newTitle);
-      res.status(201).location(newUrl).json(
+      res.status(201).location(responseURL(req, res, newId)).json(
         {
           id: newId,
           title: newTitle,
-          url: newUrl,
+          url: responseURL(req, res, newId),
           completed: completed
         }
     );
